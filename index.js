@@ -14,7 +14,7 @@ app.use(cors());
 app.use(bodyParser.json()); 
 
 
-const google = new GoogleGenerativeAI("AIzaSyBrVtfu0CEI_XgNfRfiGJPg31bE-XEmSBc");
+const google = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
 const model = google.getGenerativeModel({ model: "gemini-1.5-flash" })
 
 const getResponse = async function (text) {
