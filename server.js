@@ -14,7 +14,7 @@ app.use(cors());
 app.use(bodyParser.json()); 
 
 
-const google = new GoogleGenerativeAI("AIzaSyC9I_shDAtWEEOIrskA8QmlIXEbl8WrL-k");
+const google = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
 const model = google.getGenerativeModel({ model: "gemini-2.5-flash" })
 
 const getResponse = async function (text) {
@@ -29,13 +29,13 @@ const getResponse = async function (text) {
 
 
 app.post("/chat", async (req, res) => {
-    const { message } = req.body;
+    const { prompt } = req.body;
 
-    if (!message) {
+    if (!prompt) {
         return res.status(400).json({ error: "Message is required!" });
     }
 
-    const response = await getResponse(message);
+    const response = await getResponse(prompt);
     res.json({ response });
 });
 
