@@ -19,8 +19,13 @@ const model = google.getGenerativeModel({ model: "gemini-2.5-flash" })
 
 const getResponse = async function (text) {
     try {
-        const result = await model.generateContent(text);
-        return result.response.text();
+        const result = await model.generateContent("Keep the answer short and clear. "+text);
+       
+        const raw = result.response.text();
+
+        // Remove all bold markdown formatting
+        const cleaned = raw.replace(/\*\*(.*?)\*\*/g, '$1');
+        return raw
     } catch (error) {
         console.error("Error fetching response from Gemini:", error);
         return "Sorry, I encountered an error.";
