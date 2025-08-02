@@ -1,9 +1,10 @@
-import express from "express";
-import cors from "cors";
-import bodyParser from "body-parser";
-import dotenv from "dotenv";
-import { GoogleGenerativeAI } from "@google/generative-ai";
-
+const express = require("express");
+const cors = require("cors");
+const bodyParser = require("body-parser");
+const dotenv = require("dotenv");
+const { GoogleGenerativeAI } = require("@google/generative-ai");
+const message = require("./Model/message");
+const mongoose = require("mongoose");
 dotenv.config();
 
 const app = express();
@@ -13,7 +14,9 @@ const PORT = 5000;
 app.use(cors());
 app.use(bodyParser.json()); 
 
-
+mongoose.connect(process.env.URL)
+.then(()=>console.log("Mongodb connected succesfully"))
+.catch(error=>console.log(error))
 const google = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
 const model = google.getGenerativeModel({ model: "gemini-2.5-flash" })
 
@@ -40,8 +43,16 @@ app.post("/chat", async (req, res) => {
         return res.status(400).json({ error: "Message is required!" });
     }
 
+   
     const response = await getResponse(prompt);
+     const db = new message({
+        message: prompt,
+        response:response,
+        time: Date.now()
+    });
+    await db.save()
     res.json({ response });
+    
 });
 
 
