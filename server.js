@@ -54,6 +54,9 @@ app.post("/chat", async (req, res) => {
     res.json({ response });
     
 });
+app.get("/",(req,res)=>{
+    res.send("Server running successfully🚀🚀🚀")
+}
 
 
 app.listen(PORT, () => {
