@@ -54,7 +54,9 @@ app.post("/chat", async (req, res) => {
     res.json({ response });
     
 });
-
+app.get("/",(req,res)=>{
+    res.send("Ai service is running")
+})
 
 app.listen(PORT, () => {
     console.log(`Server running on http://localhost:${PORT}`);
