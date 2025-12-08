@@ -18,7 +18,7 @@ mongoose.connect(process.env.URL)
 .then(()=>console.log("Mongodb connected succesfully"))
 .catch(error=>console.log(error))
 const google = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
-const model = google.getGenerativeModel({ model: "gemini-2.5-flash" })
+const model = google.getGenerativeModel({ model: "gemini-2.5-flash-lite" })
 
 const getResponse = async function (text) {
     try {
@@ -31,7 +31,7 @@ const getResponse = async function (text) {
         return raw
     } catch (error) {
         console.error("Error fetching response from Gemini:", error);
-        return "Sorry, I encountered an error.";
+        return "Your day limit has been exceeded please buy a tier";
     }
 };
 

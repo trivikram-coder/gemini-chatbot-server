@@ -14,4 +14,4 @@ const messageSchema = new mongoose.Schema({
     toObject: { getters: true }
 });
 
-module.exports = mongoose.model("Message", messageSchema);
+module.exports = mongoose.model("messages", messageSchema);
