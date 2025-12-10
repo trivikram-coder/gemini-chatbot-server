@@ -4,9 +4,10 @@
   "main": "Server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon index.js"
+    "start": "nodemon server.js"
   },
   "author": "",
+  "type": "commonjs",
   "license": "ISC",
   "description": "",
   "dependencies": {
