@@ -21,8 +21,5 @@ app.post("/chat", async (req, res) => {
     res.json({ response });
     
 });
-app.get("/",async(req,res)=>{
-    res.send("Ai service is running")
-    
-})
+
 module.exports=app
