@@ -12,6 +12,9 @@ const PORT = process.env.PORT;
 app.use(cors());
 app.use(bodyParser.json()); 
 app.use("/",routes)
+app.get("/",(req,res)=>{
+    res.send("GEMINI AI SERVICE IS RUNNING🚀🚀🚀")
+})
 connectDb()
 
 app.listen(PORT, () => {
