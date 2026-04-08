@@ -18,6 +18,6 @@ app.get("/",(req,res)=>{
 connectDb()
 
 app.listen(PORT, () => {
-    console.log(`GEMINI Server running on http://localhost:${PORT}`);
+    console.log(`Gemini Chatbot Server running on http://localhost:${PORT}`);
 });
  
