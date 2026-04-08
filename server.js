@@ -13,7 +13,7 @@ app.use(cors());
 app.use(bodyParser.json()); 
 app.use("/",routes)
 app.get("/",(req,res)=>{
-    res.send("GEMINI AI SERVICE IS RUNNING🚀🚀🚀")
+    res.send("GEMINI AI API SERVICE IS RUNNING🚀🚀🚀")
 })
 connectDb()
 
