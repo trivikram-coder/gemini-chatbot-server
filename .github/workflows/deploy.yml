@@ -1,0 +1,31 @@
+name: AI SERVICE
+on:
+    push:
+        branches:
+            - main
+            - master
+jobs:
+    build:
+        runs-on: ubuntu-latest
+        
+        steps:
+            - name: Action Checkout
+              uses: actions/checkout@v3
+            - name: NodeJs Setup
+              uses: actions/setup-node@v3
+              with: 
+                 node-version: 18
+            - name: Install dependencies
+              run: npm install
+            - name: Deploy to Ec2
+              uses: appleboy/ssh-action@v1.0.3
+              with:
+                 host: ${{secrets.EC2_HOST}}
+                 username: ubuntu
+                 key: ${{secrets.EC2_SSH_KEY}}
+                 script: |
+                    cd ~/gemini-chatbot-server
+                    git fetch origin
+                    git reset --hard origin/main
+                    npm install
+                    pm2 restart aiservice || pm2 start server.js --name aiservice
