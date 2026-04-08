@@ -1,6 +1,6 @@
 const express = require("express");
 const cors = require("cors");
-const bodyParser = require("body-parser");
+
 const dotenv = require("dotenv");
 const routes=require("./Routes/routes")
 
@@ -18,5 +18,5 @@ app.get("/",(req,res)=>{
 connectDb()
 
 app.listen(PORT, () => {
-    console.log(`Server running on http://localhost:${PORT}`);
+    console.log(`GEMINI Server running on http://localhost:${PORT}`);
 });
