@@ -1,44 +1,38 @@
-const { OpenRouter } = require("@openrouter/sdk");
 const dotenv = require("dotenv");
-
 dotenv.config();
 
-// 🔍 Debug (remove later)
-console.log("API KEY:", process.env.OPENROUTER_API_KEY);
-
-const openRouter = new OpenRouter({
-  apiKey: process.env.OPENROUTER_API_KEY,
-});
-
-const sendPrompt = async function (text) {
+const sendPrompt = async (text) => {
   try {
-    const completion = await openRouter.chat.send({
-      chatRequest: {
-        model: "openai/gpt-4o-mini", // 💰 cheaper + good
-        max_tokens: 300, // 🔥 avoid credit error
+    const res = await fetch("https://openrouter.ai/api/v1/chat/completions", {
+      method: "POST",
+      headers: {
+        "Authorization": `Bearer ${process.env.OPENROUTER_API_KEY}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        model: "openai/gpt-4o-mini",
+        max_tokens: 300,
         messages: [
           {
             role: "user",
             content: "Keep it short. " + text,
           },
         ],
-      },
+      }),
     });
 
-    // ✅ Handle API error safely
-    if (completion.error) {
-      console.error("API Error:", completion.error.message);
-      return completion.error.message;
+    const data = await res.json();
+
+    if (data.error) {
+      console.error("API Error:", data.error.message);
+      return data.error.message;
     }
 
-    // ✅ Safe response access
-    const raw = completion?.choices?.[0]?.message?.content || "No response";
+    return data?.choices?.[0]?.message?.content || "No response";
 
-    return raw.replace(/\*\*(.*?)\*\*/g, "$1");
-
-  } catch (error) {
-    console.error("Error:", error);
-    return "Something went wrong.";
+  } catch (err) {
+    console.error(err);
+    return "Server error";
   }
 };
 
